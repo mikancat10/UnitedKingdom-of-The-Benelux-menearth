@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <title>United Kingdom of the Benelux ~~ menearth</title>
+    <link rel="icon" href="https://media.discordapp.net/attachments/1499351888657907786/1499772931327135774/ntf_310.png?ex=69f7fe23&is=69f6aca3&hm=79d8ffe19f67e5a11c63a9f3629b0504ba7e4dcbf568bd47358c510de27d77de&=&format=webp&quality=lossless&width=1125&height=750">
+    <style>
+        /* --- テーマ設定 (CSS変数) --- */
+        :root[data-theme="light"] {
+            --bg-color: #ffffff;
+            --side-bg: #f0f0f0;
+            --text-color: #333333;
+            --accent-color: #007bff;
+            --border-color: #cccccc;
+            --hover-bg: #e0e0e0;
+        }
+
+        :root[data-theme="dark"] {
+            --bg-color: #121212;
+            --side-bg: #1a1a1a;
+            --text-color: #e0e0e0;
+            --accent-color: #bb86fc;
+            --border-color: #333333;
+            --hover-bg: #333333;
+        }
+
+        :root[data-theme="main"] {
+            --bg-color: #002d5a; /* ロイヤルブルー */
+            --side-bg: #001f3f;
+            --text-color: #ffffff;
+            --accent-color: #ffcc00; /* ゴールド */
+            --border-color: #004080;
+            --hover-bg: #003d7a;
+        }
+
+        /* --- 基本スタイル --- */
+        body {
+            margin: 0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            transition: all 0.3s ease;
+        }
+
+        /* ヘッダー */
+        header {
+            background-color: var(--side-bg);
+            padding: 10px 25px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-area h1 {
+            margin: 0;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        /* モード切替ボタン */
+        .theme-switch {
+            display: flex;
+            gap: 8px;
+        }
+
+        .theme-switch button {
+            cursor: pointer;
+            padding: 6px 12px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-color);
+            color: var(--text-color);
+            border-radius: 4px;
+            font-size: 0.8rem;
+            transition: 0.2s;
+        }
+
+        .theme-switch button:hover {
+            background-color: var(--accent-color);
+            color: #000;
+        }
+
+        /* レイアウト */
+        .container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* サイドバー */
+        .sidebar {
+            width: 220px;
+            background-color: var(--side-bg);
+            border-right: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar li a {
+            display: block;
+            padding: 15px 25px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: 0.3s;
+            border-left: 4px solid transparent;
+        }
+
+        .sidebar li a:hover {
+            background-color: var(--hover-bg);
+            border-left: 4px solid var(--accent-color);
+        }
+
+        /* メインコンテンツ */
+        .content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        /* ページ切り替えアニメーション */
+        .page {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ヘッダー -->
+    <header>
+        <div class="logo-area">
+            <span class="icon">👑</span>
+            <h1>United Kingdom of the Benelux ~~ menearth</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- サイドバー -->
+        <nav class="sidebar">
+            <ul>
+                <li><a href="#" onclick="showPage('home')">ホーム</a></li>
+                <li><a href="#" onclick="showPage('history')">歴史</a></li>
+                <li><a href="#" onclick="showPage('nations')">インフラ</a></li>
+                <li><a href="#" onclick="showPage('contact')">サーバーについて</a></li>
+            </ul>
+        </nav>
+
+        <!-- メインコンテンツ -->
+        <main class="content">
+            <section id="home" class="page active">
+                <h2>Welcome</h2>
+                <p>ベネルクス連合王国の公式ホームページへようこそ。ここでは国の歴史を紹介します。</p>
+                <p>この国は、オランダだけで今は構成されています</p>
+                <p>主張領土はベネルクス、北欧、フランス、ドイツ、イタリア、マルタ、キプロス、トルコ、アイスランド、スイス</p>
+                <p>国旗</p>
+                <img src="https://media.discordapp.net/attachments/1499351888657907786/1499772931327135774/ntf_310.png?ex=69f7fe23&is=69f6aca3&hm=79d8ffe19f67e5a11c63a9f3629b0504ba7e4dcbf568bd47358c510de27d77de&=&format=webp&quality=lossless&width=1125&height=750" alt="国旗" style="width: 300px; margin-top: 20px;">
+            </section>
+
+            <section id="history" class="page">
+                <h2>History</h2>
+                <p>2026/5/3、ベネルクス連合王国が成立。</p>
+                <p>2026/5/3、荒らしによる攻撃を受ける</p>
+            </section>
+
+            <section id="nations" class="page">
+                <h2>インフラなど</h2>
+                <p>道路、敷地のインフラ整備</p>
+                <p>農業区域？の建設</p>
+                <p>荒らしによる攻撃で都市のシンボル崩壊</p>
+                <p>荒らしに攻撃された首都のシンボルはそのままにし、新しいシンボルの建設をする予定。</p>
+                <p>道路、敷地の修復</p>
+            </section>
+
+            <section id="contact" class="page">
+                <h2>サーバーについて</h2>
+                <p>麺アースは2025/10月に作成された新規サーバー？です！</p>
+                <p>いろいろなイベントをし、5/2にシーズン3になりました！</p>
+                <p>入り方は <a href="https://discord.gg/xDKXWj97BD" target="_blank">Discord</a> で教わるのをお勧めします！</p>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // ページ切り替え関数
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+        }
+
+        // テーマ切り替え関数
+        function setTheme(themeName) {
+            // htmlタグの data-theme 属性を書き換える
+            document.documentElement.setAttribute('data-theme', themeName);
+            // 選択を保存（リロードしても維持される）
+            localStorage.setItem('benelux-theme', themeName);
+        }
+
+        // ページ読み込み時に保存されたテーマを適用
+        window.onload = () => {
+            const savedTheme = localStorage.getItem('benelux-theme') || 'dark';
+            setTheme(savedTheme);
+        };
+    </script>
+</body>
+</html>
