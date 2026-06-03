@@ -1,96 +1,132 @@
 <!DOCTYPE html>
-<html lang="ja" data-theme="dark">
+<html lang="ja" data-theme="main">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>United Kingdom of the Benelux ~~ menearth</title>
     <link rel="icon" href="https://media.discordapp.net/attachments/1499351888657907786/1499772931327135774/ntf_310.png?ex=69f7fe23&is=69f6aca3&hm=79d8ffe19f67e5a11c63a9f3629b0504ba7e4dcbf568bd47358c510de27d77de&=&format=webp&quality=lossless&width=1125&height=750">
     <style>
         /* --- テーマ設定 (CSS変数) --- */
         :root[data-theme="light"] {
-            --bg-color: #ffffff;
-            --side-bg: #f0f0f0;
-            --text-color: #333333;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --side-bg: #ffffff;
+            --text-color: #212529;
+            --text-muted: #6c757d;
             --accent-color: #007bff;
-            --border-color: #cccccc;
-            --hover-bg: #e0e0e0;
+            --accent-hover: #0056b3;
+            --border-color: #e9ecef;
+            --hover-bg: #f1f3f5;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
 
         :root[data-theme="dark"] {
             --bg-color: #121212;
+            --card-bg: #1e1e1e;
             --side-bg: #1a1a1a;
-            --text-color: #e0e0e0;
+            --text-color: #f8f9fa;
+            --text-muted: #a0a0a0;
             --accent-color: #bb86fc;
-            --border-color: #333333;
-            --hover-bg: #333333;
+            --accent-hover: #9c27b0;
+            --border-color: #2d2d2d;
+            --hover-bg: #2d2d2d;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
         }
 
         :root[data-theme="main"] {
             --bg-color: #002d5a; /* ロイヤルブルー */
+            --card-bg: rgba(0, 31, 63, 0.6); /* 透過させたディープブルー */
             --side-bg: #001f3f;
             --text-color: #ffffff;
+            --text-muted: #cbd5e1;
             --accent-color: #ffcc00; /* ゴールド */
+            --accent-hover: #e6b800;
             --border-color: #004080;
             --hover-bg: #003d7a;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
         /* --- 基本スタイル --- */
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             display: flex;
             flex-direction: column;
             height: 100vh;
-            transition: all 0.3s ease;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            overflow: hidden;
         }
 
         /* ヘッダー */
         header {
             background-color: var(--side-bg);
-            padding: 10px 25px;
+            padding: 15px 30px;
             border-bottom: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 10;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .logo-area {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
+        }
+
+        .logo-area .icon {
+            font-size: 1.5rem;
         }
 
         .logo-area h1 {
             margin: 0;
-            font-size: 1.2rem;
-            letter-spacing: 1px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
 
-        /* モード切替ボタン */
+        /* テーマ切替ボタン */
         .theme-switch {
             display: flex;
-            gap: 8px;
+            gap: 6px;
+            background: rgba(0, 0, 0, 0.15);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
         }
 
         .theme-switch button {
             cursor: pointer;
             padding: 6px 12px;
-            border: 1px solid var(--border-color);
-            background: var(--bg-color);
+            border: none;
+            background: transparent;
             color: var(--text-color);
-            border-radius: 4px;
-            font-size: 0.8rem;
-            transition: 0.2s;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            opacity: 0.7;
         }
 
         .theme-switch button:hover {
-            background-color: var(--accent-color);
-            color: #000;
+            opacity: 1;
+            background: var(--hover-bg);
         }
 
-        /* レイアウト */
+        .theme-switch button.active {
+            opacity: 1;
+            background: var(--accent-color);
+            color: #000000;
+        }
+
+        /* レイアウト構成 */
         .container {
             display: flex;
             flex: 1;
@@ -99,10 +135,13 @@
 
         /* サイドバー */
         .sidebar {
-            width: 220px;
+            width: 240px;
             background-color: var(--side-bg);
             border-right: 1px solid var(--border-color);
-            padding-top: 20px;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .sidebar ul {
@@ -111,18 +150,28 @@
             margin: 0;
         }
 
-        .sidebar li a {
-            display: block;
-            padding: 15px 25px;
-            color: var(--text-color);
-            text-decoration: none;
-            transition: 0.3s;
-            border-left: 4px solid transparent;
+        .sidebar li {
+            margin-bottom: 4px;
         }
 
-        .sidebar li a:hover {
+        .sidebar li a {
+            display: flex;
+            align-items: center;
+            padding: 14px 24px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            border-left: 4px solid transparent;
+            opacity: 0.8;
+        }
+
+        .sidebar li a:hover, .sidebar li a.active {
+            opacity: 1;
             background-color: var(--hover-bg);
             border-left: 4px solid var(--accent-color);
+            color: var(--accent-color);
         }
 
         /* メインコンテンツ */
@@ -130,28 +179,182 @@
             flex: 1;
             padding: 40px;
             overflow-y: auto;
+            background: radial-gradient(circle at top right, rgba(255,204,0,0.05), transparent 40%), var(--bg-color);
         }
 
-        /* ページ切り替えアニメーション */
+        /* 各ページ共通コンポーネント */
         .page {
             display: none;
-            animation: fadeIn 0.4s ease-out;
+            max-width: 800px;
+            margin: 0 auto;
+            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .page.active {
             display: block;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateX(10px); }
-            to { opacity: 1; transform: translateX(0); }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-top: 0;
+            margin-bottom: 24px;
+            position: relative;
+            padding-bottom: 10px;
+            font-weight: 700;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 4px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        /* カード風デザイン */
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(8px);
+        }
+
+        p {
+            line-height: 1.7;
+            margin: 0 0 16px 0;
+            font-size: 1rem;
+        }
+
+        p:last-child {
+            margin-bottom: 0;
+        }
+
+        .text-muted {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* 国旗画像 */
+        .flag-wrapper {
+            margin-top: 25px;
+            text-align: left;
+        }
+
+        .flag-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         img {
             max-width: 100%;
+            width: 340px;
             height: auto;
             border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        img:hover {
+            transform: scale(1.02);
+        }
+
+        /* タイムライン・リスト要素のモダン化 */
+        .timeline-item {
+            border-left: 2px solid var(--border-color);
+            padding-left: 20px;
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 6px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+        }
+
+        .timeline-date {
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        /* ボタン・リンクのモダン化 */
+        .btn-discord {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #5865F2; /* Discord公式カラー */
+            color: #ffffff !important;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 15px;
+            box-shadow: 0 4px 12px rgba(88, 101, 242, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .btn-discord:hover {
+            background-color: #4752C4;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(88, 101, 242, 0.4);
+        }
+
+        /* レスポンシブ (スマホ対応) */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                padding: 0;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .sidebar ul {
+                display: flex;
+                overflow-x: auto;
+            }
+            .sidebar li a {
+                padding: 12px 20px;
+                white-space: nowrap;
+                border-left: none;
+                border-bottom: 3px solid transparent;
+            }
+            .sidebar li a:hover, .sidebar li a.active {
+                border-left: none;
+                border-bottom: 3px solid var(--accent-color);
+            }
+            .content {
+                padding: 20px;
+            }
+            header {
+                flex-direction: column;
+                gap: 12px;
+                padding: 15px;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -160,8 +363,14 @@
     <!-- ヘッダー -->
     <header>
         <div class="logo-area">
-            <span class="icon">👑</span>
-            <h1>United Kingdom of the Benelux ~~ menearth</h1>
+            <span class="icon"></span>
+            <h1>United Kingdom of the Benelux</h1>
+        </div>
+        <!-- テーマ切り替えUI -->
+        <div class="theme-switch">
+            <button id="theme-main" onclick="setTheme('main')">MAIN</button>
+            <button id="theme-dark" onclick="setTheme('dark')">DARK</button>
+            <button id="theme-light" onclick="setTheme('light')">LIGHT</button>
         </div>
     </header>
 
@@ -169,74 +378,140 @@
         <!-- サイドバー -->
         <nav class="sidebar">
             <ul>
-                <li><a href="#" onclick="showPage('home')">ホーム</a></li>
-                <li><a href="#" onclick="showPage('history')">歴史</a></li>
-                <li><a href="#" onclick="showPage('nations')">インフラ</a></li>
-                <li><a href="#" onclick="showPage('contact')">サーバーについて</a></li>
+                <li><a href="#" id="nav-home" class="active" onclick="showPage('home')">ホーム</a></li>
+                <li><a href="#" id="nav-history" onclick="showPage('history')">歴史</a></li>
+                <li><a href="#" id="nav-nations" onclick="showPage('nations')">インフラ</a></li>
+                <li><a href="#" id="nav-contact" onclick="showPage('contact')">サーバーについて</a></li>
             </ul>
         </nav>
 
         <!-- メインコンテンツ -->
         <main class="content">
+            
+            <!-- ホーム -->
             <section id="home" class="page active">
                 <h2>Welcome</h2>
-                <p>ベネルクス連合王国の公式ホームページへようこそ。ここでは国の歴史を紹介します。</p>
-                <p>この国は、オランダだけで今は構成されています</p>
-                <p>主張領土はベネルクス、北欧、フランス、ドイツ、イタリア、マルタ、キプロス、トルコ、アイスランド、スイス</p>
-                <p>国旗</p>
-                <img src="https://media.discordapp.net/attachments/1499351888657907786/1499772931327135774/ntf_310.png?ex=69f7fe23&is=69f6aca3&hm=79d8ffe19f67e5a11c63a9f3629b0504ba7e4dcbf568bd47358c510de27d77de&=&format=webp&quality=lossless&width=1125&height=750" alt="国旗" style="width: 300px; margin-top: 20px;">
+                <div class="card">
+                    <p>ベネルクス連合王国の公式ホームページへようこそ。ここでは国の歴史やインフラ情報を紹介しています。</p>
+                    <p>当国は、平和主義です</p>
+                </div>
+                
+                <div class="card">
+                    <p class="flag-title">🚩 <strong>主な主張領土</strong></p>
+                    <p class="text-muted">ベネルクス三国、フランス北部、ドイツ、マルタ、キプロス、トルコ、アイスランド、アメリカ(東部のさらに一部だけ)、フィリピン、フランス領インドシナ連邦</p>
+                </div>
+
+                <div class="flag-wrapper">
+                    <p class="flag-title">🇳🇱 <strong>国旗</strong></p>
+                    <img src="https://media.discordapp.net/attachments/1499351888657907786/1499772931327135774/ntf_310.png?ex=69f7fe23&is=69f6aca3&hm=79d8ffe19f67e5a11c63a9f3629b0504ba7e4dcbf568bd47358c510de27d77de&=&format=webp&quality=lossless&width=1125&height=750" alt="ベネルクス連合王国 国旗">
+                </div>
             </section>
 
+            <!-- 歴史 -->
             <section id="history" class="page">
                 <h2>History</h2>
-                <p>2026/5/3、ベネルクス連合王国が成立。</p>
-                <p>2026/5/3、荒らしによる攻撃を受ける</p>
+                <div class="card">
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026 / 05 / 03</div>
+                        <p><strong>ベネルクス連合王国が成立</strong></p>
+                    </div>
+                    <div class="timeline-item" style="margin-bottom: 0;">
+                        <div class="timeline-date">2026 / 05 / 03</div>
+                        <p>荒らしによる攻撃を受ける</p>
+                    </div>
+                    <div class="timeline-item" style="margin-bottom: 0;">
+                        <div class="timeline-date">2026 / 06 / 03</div>
+                        <p>ついに国土面積ランキングTOP3にランクイン！(13:46時点では二位)</p>
+                    </div>
+                </div>
             </section>
 
+            <!-- インフラ -->
             <section id="nations" class="page">
-                <h2>インフラなど</h2>
-                <p>道路、敷地のインフラ整備</p>
-                <p>農業区域？の建設</p>
-                <p>荒らしによる攻撃で都市のシンボル崩壊</p>
-                <p>荒らしに攻撃された首都のシンボルはそのままにし、新しいシンボルの建設をする予定。</p>
-                <p>道路、敷地の修復</p>
+                <h2>Infrastructure</h2>
+                <div class="card">
+                    <p>⚙️ <strong>道路・敷地のインフラ整備</strong></p>
+                    <p class="text-muted">主要道路の舗装、および各区画のインフラ基盤の整備を進行中。</p>
+                </div>
+                <div class="card">
+                    <p>🌾 <strong>農業区域の建設</strong></p>
+                    <p class="text-muted">食料自給率向上のため、大規模な農業セクターの建設計画を策定。</p>
+                </div>
+                <div class="card" style="border-left: 4px solid #ef4444;">
+                    <p>🏛️ <strong style="color: #ef4444;">首都シンボルの崩壊と今後について</strong></p>
+                    <p>荒らしの攻撃により都市のシンボルが崩壊しました。当国の方針として、<strong>攻撃された旧シンボルは歴史の遺構としてそのままの状態で保存</strong>し、新たに別の場所に「新シンボル」を建設する予定です。</p>
+                    <p class="text-muted" style="margin-top: 10px;">🛠️ 現在、並行して道路や崩壊した敷地の修復作業を進めています。</p>
+                </div>
+                <div class="card">
+                    <p>⚙️ <strong>崩壊後の道路・敷地のインフラ整備</strong></p>
+                    <p class="text-muted">荒らされた部分を修復全部分完了！</p>
+                </div>
+                <div class="card">
+                    <p>⚙️ <strong>国の議会(日本で言う国会議事堂)の建設</strong></p>
+                    <p class="text-muted">議会の部分も作成完了。</p>
+                </div>
+                <div class="card">
+                    <p>⚙️ <strong>首都のシンボル建設</strong></p>
+                    <p class="text-muted">今は線路?建設中です</p>
+                </div>
             </section>
 
+            <!-- サーバーについて -->
             <section id="contact" class="page">
-                <h2>サーバーについて</h2>
-                <p>麺アースは2025/10月に作成された新規サーバー？です！</p>
-                <p>いろいろなイベントをし、5/2にシーズン3になりました！</p>
-                <p>入り方は <a href="https://discord.gg/xDKXWj97BD" target="_blank">Discord</a> で教わるのをお勧めします！</p>
+                <h2>About Server</h2>
+                <div class="card">
+                    <p><strong>麺アース（menearth）</strong>は、2025年10月に誕生した建国マイクラサーバーです！</p>
+                    <p>これまで様々なゲーム内イベントが開催され、大盛況を見せています。また、直近の<strong>5月2日には待望の「シーズン3」へと突入</strong>し、さらなる盛り上がりを見せています！</p>
+                </div>
+                <div class="card" style="text-align: center; padding: 30px 20px;">
+                    <p style="margin-bottom: 5px;">👑 <strong>あなたもベネルクス連合王国に参加しませんか？</strong></p>
+                    <p class="text-muted" style="font-size: 0.9rem;">サーバーの参加方法や詳細なルールは、公式Discordにて丁寧に解説しています！</p>
+                    <a href="https://discord.gg/xDKXWj97BD" target="_blank" class="btn-discord">
+                        <span>Discordサーバーに参加する</span>
+                    </a>
+                </div>
             </section>
         </main>
     </div>
 
-    <script src="script.js"></script>
     <script>
         // ページ切り替え関数
         function showPage(pageId) {
+            // すべてのページを非表示に
             const pages = document.querySelectorAll('.page');
-            pages.forEach(page => {
-                page.classList.remove('active');
-            });
+            pages.forEach(page => page.classList.remove('active'));
 
+            // すべてのナビゲーションリンクのactiveを解除
+            const navLinks = document.querySelectorAll('.sidebar a');
+            navLinks.forEach(link => link.classList.remove('active'));
+
+            // ターゲットのページとナビを表示
             const targetPage = document.getElementById(pageId);
-            if (targetPage) {
-                targetPage.classList.add('active');
-            }
+            const targetNav = document.getElementById(`nav-${pageId}`);
+            
+            if (targetPage) targetPage.classList.add('active');
+            if (targetNav) targetNav.classList.add('active');
+            
+            // スマホ環境の時にページ切り替え後、自動で上部へスクロール
+            document.querySelector('.content').scrollTop = 0;
         }
 
         // テーマ切り替え関数
         function setTheme(themeName) {
-            // htmlタグの data-theme 属性を書き換える
             document.documentElement.setAttribute('data-theme', themeName);
-            // 選択を保存（リロードしても維持される）
             localStorage.setItem('benelux-theme', themeName);
+            
+            // ボタンのactiveクラスを更新
+            const buttons = document.querySelectorAll('.theme-switch button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            const activeBtn = document.getElementById(`theme-${themeName}`);
+            if (activeBtn) activeBtn.classList.add('active');
         }
 
         // ページ読み込み時に保存されたテーマを適用
         window.onload = () => {
-            const savedTheme = localStorage.getItem('benelux-theme') || 'dark';
+            const savedTheme = localStorage.getItem('benelux-theme') || 'main';
             setTheme(savedTheme);
         };
     </script>
